@@ -1,0 +1,33 @@
+{% extends 'signup_base.html' %}
+
+{% block nav %}
+    <li class="active"><a href="{% url 'home' %}">Login</a></li>
+    <li><a href="{% url 'sign' %}">Signup</a></li>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h1 class="panel-title text-center"><strong>Login</strong></h1>
+                </div>
+                <div class="panel panel-body">
+                    <form action="" method="post">{% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Username</label>
+                            {{ form.username }}
+                            <label for="pwd">Password</label>
+                            {{ form.password }}
+                            <label for="name"></label>
+                            Click <a href="{% url 'sign' %}">here</a> to signup
+                            <button class="btn btn-sm btn-default btn-block" type="submit">Sign in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

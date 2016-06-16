@@ -1,0 +1,77 @@
+{% extends 'user/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block nav %}
+    <li class="active"><a>Home</a></li>
+    <li><a href="{% url 'hist' %}">Check History</a></li>
+    <li><a href="{% url 'out' %}">Logout</a></li>
+{% endblock %}
+
+{% block content %}
+    <p class="text-center text-primary">Today, {{ time }}</p>
+    <div class="alert alert-success text-center">Total Volumes in Litres: <strong>{{ openv.invent }}</strong></div>
+    <div class="alert alert-success text-center">Amount Per Litre NGN<strong id="per">{{ per.perLitre }}</strong>K</div>
+
+
+    <form action="." method="post" role="form">{% csrf_token %}
+        <label>Enter Volume of Sale:</label>
+            <div class="input-group">
+                <div class="col-md-3">
+                    <span class="input-group-btn">
+                        {{ form.litres }}
+                        <button type="submit" class="btn btn-default">Enter
+                            <span class="glyphicon glyphicon-briefcase"></span>
+                        </button>
+                </span>
+                </div>
+
+            </div>
+        <p>Sales: <input type="radio" name="t" value="S" checked> Delivery: <input type="radio" name="t" value="D"></p>
+        </form>
+    <p id="amount">Amount of Sale: NGN <strong id="send">0.00</strong> K</p>
+    <table class="table table-bordered">
+        <caption style="text-align: center">History Sheet</caption>
+        <thead><tr>
+            <th>Date</th><th>Volume Sold (litres)</th><th>Total Volume Remain (litres)</th><th>Amount (NGN)</th><th>Total Amount Left (NGN)</th>
+        <th>Type of Transaction (Sales)</th></tr>
+        </thead>
+        {% for hi in his %}
+            {% if hi.types == "S" %}
+                <tr class="success">
+                <td>{{ hi.date }}</td> <td>{{ hi.sold_volume }}</td> <td>{{ hi.total_volume }}</td>
+                <td>{{ hi.amount }}</td> <td>{{ hi.total_amount }}</td> <td>{{ hi.types }}</td>
+                </tr>
+            {% elif hi.types == "D" %}
+                <tr class="active">
+                <td>{{ hi.date }}</td> <td>{{ hi.sold_volume }}</td> <td>{{ hi.total_volume }}</td>
+                <td>{{ hi.amount }}</td> <td>{{ hi.total_amount }}</td> <td>{{ hi.types }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+    </table>
+
+<script>
+    $('#calc').keyup(function () {
+        $(document).ready(function(){
+            var mov = $('#calc').val();
+            var perL = $('#per').text();
+            var litre = Number(mov);
+            var total = Number(perL) * litre;
+            if(total==0){
+                $('#send').text("0.00");
+            }else{
+                $('#send').text(total);
+            }
+        });
+    });
+
+    $('#enter').click(function(){
+        var no = $('#per').text();
+        console.log(no)
+
+    });
+</script>
+
+{% endblock %}

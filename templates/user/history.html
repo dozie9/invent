@@ -1,0 +1,36 @@
+{% extends 'user/base.html' %}
+
+{% block title %}User History{% endblock %}
+
+{% block nav %}
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li class="active"><a href="{% url 'hist' %}">Check History</a></li>
+    <li><a href="{% url 'out' %}">Logout</a></li>
+{% endblock %}
+
+{% block content %}
+    <p class="text-center text-primary">Today, {{ time }}</p>
+
+    <table class="table table-bordered">
+        <caption style="text-align: center">History Sheet</caption>
+        <thead><tr>
+            <th>Date</th><th>Volume Sold (litres)</th><th>Total Volume Remain (litres)</th><th>Amount (NGN)</th><th>Total Amount Left (NGN)</th>
+        <th>Type of Transaction (Sales)</th></tr>
+        </thead>
+    {% for hi in his %}
+        {% if hi.types == "S" %}
+            <tr class="success">
+                <td>{{ hi.date }}</td> <td>{{ hi.sold_volume }}</td> <td>{{ hi.total_volume }}</td>
+                <td>{{ hi.amount }}</td> <td>{{ hi.total_amount }}</td> <td>{{ hi.types }}</td>
+                </tr>
+        {% else %}
+            <tr class="active">
+                <td>{{ hi.date }}</td> <td>{{ hi.sold_volume }}</td> <td>{{ hi.total_volume }}</td>
+                <td>{{ hi.amount }}</td> <td>{{ hi.total_amount }}</td> <td>{{ hi.types }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+
+    </table>
+
+{% endblock %}

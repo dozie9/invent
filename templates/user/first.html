@@ -1,0 +1,13 @@
+{% extends 'user/base.html' %}
+
+{% block title %}Preference{% endblock %}
+
+{% block content %}
+    <form action="." method="post">{% csrf_token %}
+        Opening Inventory: {{ form.volume }} Litres<br>
+        Set Amount Per Litre: NGN {{ form.perLitre }} K<br>
+        Set your initial Amount NGN {{ form.amount }} K<br>
+        <input type="submit" value="Save and Continue">
+    </form>
+
+{% endblock %}

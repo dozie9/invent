@@ -1,0 +1,29 @@
+{% extends 'super/base.html' %}
+
+{% block title %}Details{% endblock %}
+
+{% block nav %}
+    <li class="active"><a>Home</a></li>
+    <li><a href="{% url 'out' %}">Logout</a></li>
+{% endblock %}
+
+{% block content %}
+    <p class="text-center text-primary">Today, {{ date }}</p>
+        <h3>History Sheet</h3>
+    <table  >
+        <th>Date</th><th>Volume Sold (litres)</th><th>Total Volume Remain (litres)</th><th>Amount (NGN)</th><th>Total Amount Left (NGN)</th>
+        <th>Type of Transaction (Sales)</th><th>State</th>
+    {% for hi in sales %}
+        <tr>
+        <td>{{ hi.date }}</td> <td>{{ hi.sold_volume }}</td> <td>{{ hi.total_volume }}</td>
+        <td>{{ hi.amount }}</td> <td>{{ hi.total_amount }}</td> <td>{{ hi.types }}</td><td>{{ hi.locale.state }}</td>
+        </tr>
+    {% endfor %}
+
+    </table>
+
+    <h3>Locations</h3>
+    {% for state in states %}
+        <a href="/{{ state.state }}">{{ state.state }}</a>
+    {% endfor %}
+{% endblock %}
